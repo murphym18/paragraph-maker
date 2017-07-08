@@ -1,40 +1,14 @@
 function splitStrings(str) {
-  var p = str.split(/\./g).map(function(s) {
-    if (s !== "" && s[s.length - 1] !== "." && s[s.length - 1] !== "?" && s[s.length - 1] !== "!") {
-      return s.trim() + "."
-    }
-    return s.trim()
-  });
-  var tmp = []
-  p.map(function(s) {
-    var q = s.split(/\?/g)
-    return q.map(function(w) {
-      if (s !== "" && s[s.length - 1] !== "." && s[s.length - 1] !== "?" && s[s.length - 1] !== "!") {
-        return w.trim() + "?"
-      }
-      return w.trim()
-    })
-  }).forEach(function(arr) {
-    arr.forEach(function(e) {
-      tmp.push(e)
-    })
-  })
-  var result = []
-  tmp.map(function(s) {
-    return s.split(/\!/g).map(function (w) {
-      if (s !== "" && s[s.length - 1] !== "." && s[s.length - 1] !== "?" && s[s.length - 1] !== "!") {
-        return w.trim() + "!"
-      }
-      return w.trim()
-    })
-  }).forEach(function(arr) {
-    arr.forEach(function(e) {
-      result.push(e)
-    })
-  })
-  return result.filter(function(s) {
-    return s !== ""
-  })
+  var payload = {
+    paragraph: str
+  }
+  var reqDetails = {
+    method: 'POST',
+    contentType: 'application/json',
+    processData: false,
+    data: JSON.stringify(payload)
+  }
+  return $.ajax('/api/sentence_boundary_detection', reqDetails);
 }
 
 function combineStrings(strs) {
@@ -72,13 +46,18 @@ function onCombineButton() {
 
 function onSplitButton() {
   // iterate through each text area and collect each string
+  var sentences = getAllSentences()
   // join all teh strings together
-  // then split the strings sentence by sentence
+  var paragraph = combineStrings(sentences)
+  // split the strings sentence by sentence
+  var promise = splitStrings(paragraph)
   // then for each string render html for text area with the string as the value
   // join all the rendered html together
   // replace the current gui with this newly rendered html
-  var h = splitStrings(combineStrings(getAllSentences())).map(makeTextAreaHtml).join("")
-  $('.all-sentences').html(h)
+  promise.then(function success(res) {
+    var h = res.arr.map(makeTextAreaHtml).join("")
+    $('.all-sentences').html(h)
+  })
 }
 
 $(function() {
@@ -86,3 +65,7 @@ $(function() {
   $("#combine_button").on('click', onCombineButton)
   $('.all-sentences').html([""].map(makeTextAreaHtml).join(""))
 })
+
+function capitalize(sentence){
+  return sentence.charAt(0).toUpperCase() + sentence.slice(1);
+}
