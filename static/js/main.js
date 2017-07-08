@@ -19,9 +19,19 @@ function combineStrings(strs) {
 }
 
 function makeTextAreaHtml(str) {
-  return `<div >
-      <textarea placeholder="Sentence" class="form-control a-sentence" rows="9">${str}</textarea>
-  </div><br>`
+  return `
+  <div class="row">
+  <div class="col-md-10" >
+      <textarea placeholder="Sentence" class="form-control a-sentence" rows="2">${str}</textarea>
+  </div>
+  <div class="col-md-2">
+    <div class=" btn-group" role="group" aria-label="...">
+      <button type="button" class="btn btn-default read-button">Read</button>
+    </div>
+  </div>
+  </div>
+  <br>
+  `
 }
 
 function getAllSentences() {
