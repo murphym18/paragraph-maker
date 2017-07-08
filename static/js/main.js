@@ -34,6 +34,26 @@ function makeTextAreaHtml(str) {
   `
 }
 
+function read(str) {
+  var payload = {
+    text: str
+  }
+  var reqDetails = {
+    method: 'POST',
+    contentType: 'application/json',
+    processData: false,
+    data: JSON.stringify(payload)
+  }
+  $.ajax('/api/read', reqDetails).then(function(d) {
+    $("#audio").html(`
+      <audio controls>
+        <source src="/api/audio/${d.audio_name}" type="audio/wav">
+        <p>Your browser doesn't support HTML5 audio. Here is a <a href="viper.mp3">link to the audio</a> instead.</p>
+      </audio>
+      `)
+  });
+}
+
 function getAllSentences() {
   return $(".a-sentence").map(function(e, textArea) {
     return textArea.value
@@ -66,9 +86,15 @@ function onSplitButton() {
   })
 }
 
+function onReadButton() {
+  var text = getAllSentences().join(" ")
+  read(text)
+}
+
 $(function() {
   $("#split_button").on('click', onSplitButton)
   $("#combine_button").on('click', onCombineButton)
+  $("#read_button").on('click', onReadButton)
   $('.all-sentences').html([""].map(makeTextAreaHtml).join(""))
 })
 
