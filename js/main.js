@@ -1,6 +1,6 @@
 function splitStrings(str) {
   var p = str.split(/\.\s+/g).map(function(s) {
-    if (s !== "" && s[s.length - 1] !== ".") {
+    if (s !== "" && s[s.length - 1] !== "." && s[s.length - 1] !== "?" && s[s.length - 1] !== "!") {
       return s.trim() + "."
     }
     return s.trim()
@@ -9,7 +9,7 @@ function splitStrings(str) {
   p.map(function(s) {
     var q = s.split(/\?/g)
     return q.map(function(w) {
-      if (w !== "" && w[w.length - 1] !== ".") {
+      if (w !== "" && w[w.length - 1] !== "." && s[s.length - 1] !== "!") {
         return w.trim() + "?"
       }
       return w.trim()
