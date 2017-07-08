@@ -14,10 +14,6 @@ function splitStrings(str) {
 function combineStrings(strs) {
   return strs.reduce(function(cur, next) {
     next = next.trim()
-    var lastChar = next[next.length - 1];
-    if (lastChar !== "." && lastChar !== "?" && lastChar !== "!") {
-      next = next + "."
-    }
     return cur + " " + next
   }, "").trim()
 }
