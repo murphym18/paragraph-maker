@@ -46,7 +46,7 @@ function read(str) {
   }
   $.ajax('/api/read', reqDetails).then(function(d) {
     $("#audio").html(`
-      <audio controls>
+      <audio controls autoplay="true">
         <source src="/api/audio/${d.audio_name}" type="audio/wav">
         <p>Your browser doesn't support HTML5 audio. Here is a <a href="viper.mp3">link to the audio</a> instead.</p>
       </audio>
@@ -67,7 +67,7 @@ function onCombineButton() {
   // join all the strings together
   // render one text area with this string
   // replace the current html with this one
-  $('.all-sentences').html(makeTextAreaHtml(combineStrings(getAllSentences())))
+  renderAllsentences(makeTextAreaHtml(combineStrings(getAllSentences())))
 }
 
 function onSplitButton() {
@@ -82,8 +82,24 @@ function onSplitButton() {
   // replace the current gui with this newly rendered html
   promise.then(function success(res) {
     var h = res.arr.map(makeTextAreaHtml).join("")
-    $('.all-sentences').html(h)
+    renderAllsentences(h)
   })
+}
+
+function renderAllsentences(h) {
+  $('.all-sentences').html(h)
+  $('button.read-button').on('click', onReadTextArea)
+}
+
+function onReadTextArea(e) {
+  var rowElm = e.currentTarget.parentNode.parentNode.parentNode
+  var txtarea = $(rowElm).find('.a-sentence')
+  // console.log(txtarea)
+  var txt = txtarea.map(function(e, ta) {
+    return ta.value
+  }).toArray().join("")
+  // console.log(txt)
+  read(txt)
 }
 
 function onReadButton() {
@@ -94,8 +110,8 @@ function onReadButton() {
 $(function() {
   $("#split_button").on('click', onSplitButton)
   $("#combine_button").on('click', onCombineButton)
-  $("#read_button").on('click', onReadButton)
-  $('.all-sentences').html([""].map(makeTextAreaHtml).join(""))
+  $("#read_all_button").on('click', onReadButton)
+  renderAllsentences([""].map(makeTextAreaHtml).join(""))
 })
 
 function capitalize(sentence){
