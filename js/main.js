@@ -1,7 +1,38 @@
 function splitStrings(str) {
-  return str.split(/[\.]\s+/g).map(function(s) {
+  var p = str.split(/\.\s+/g).map(function(s) {
+    if (s !== "" && s[s.length - 1] !== ".") {
+      return s.trim() + "."
+    }
     return s.trim()
-  }).filter(function(s) {
+  });
+  var tmp = []
+  p.map(function(s) {
+    var q = s.split(/\?/g)
+    return q.map(function(w) {
+      if (w !== "" && w[w.length - 1] !== ".") {
+        return w.trim() + "?"
+      }
+      return w.trim()
+    })
+  }).forEach(function(arr) {
+    arr.forEach(function(e) {
+      tmp.push(e)
+    })
+  })
+  var result = []
+  tmp.map(function(s) {
+    return s.split(/\!/g).map(function (w) {
+      if (w !== "" && w[w.length - 1] !== "." && w[w.length - 1] !== "?") {
+        return w.trim() + "!"
+      }
+      return w.trim()
+    })
+  }).forEach(function(arr) {
+    arr.forEach(function(e) {
+      result.push(e)
+    })
+  })
+  return result.filter(function(s) {
     return s !== ""
   })
 }
@@ -10,7 +41,7 @@ function combineStrings(strs) {
   return strs.reduce(function(cur, next) {
     next = next.trim()
     var lastChar = next[next.length - 1];
-    if (lastChar !== ".") {
+    if (lastChar !== "." && lastChar !== "?" && lastChar !== "!") {
       next = next + "."
     }
     return cur + " " + next
