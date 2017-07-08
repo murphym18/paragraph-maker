@@ -1,4 +1,4 @@
-##How to get setup
+## How to get setup
 You need to clone this repository, install all the dependencies, and put your bluemix.net login into `cred.py`
 
 To get the python `bottle` library installed on Linux mint enter 
