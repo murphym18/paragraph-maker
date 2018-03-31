@@ -10,8 +10,7 @@ from watson_developer_cloud import TextToSpeechV1
 
 text_to_speech = TextToSpeechV1(
     username=cred.get_username(),
-    password=cred.get_password(),
-    x_watson_learning_opt_out=True)  # Optional flag
+    password=cred.get_password()) 
 
 @route('/static/')
 def index_html():
@@ -40,4 +39,4 @@ def get_audio(audio_hash):
     response.content_type = 'audio/wav'
     return audio_data[audio_hash]
 
-run(host='localhost', port=8080, debug=True, reloader=True)
+run(host='0.0.0.0', port=8080, debug=True, reloader=True)
