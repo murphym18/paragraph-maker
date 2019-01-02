@@ -1,5 +1,5 @@
-def get_username():
+def get_ibm_username():
     return 'USERNAME HERE'
 
-def get_password():
+def get_ibm_password():
     return 'PASSWORD HERE'
