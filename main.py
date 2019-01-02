@@ -3,14 +3,11 @@ from nltk import sent_tokenize
 import json
 import sys
 import hashlib
-import cred
+import speech
+
+voice = speech.ibm_voice
 audio_data = dict()
 
-from watson_developer_cloud import TextToSpeechV1
-
-text_to_speech = TextToSpeechV1(
-    username=cred.get_username(),
-    password=cred.get_password()) 
 
 @route('/static/')
 def index_html():
@@ -31,7 +28,7 @@ def read():
     h = hashlib.new('sha256')
     h.update(bytes(str(t), 'utf-8'))
     file_name = h.hexdigest()
-    audio_data[file_name] = text_to_speech.synthesize(t, accept='audio/wav', voice="en-US_AllisonVoice")
+    audio_data[file_name] = voice(t)
     return dict(audio_name=file_name)
 
 @route('/api/audio/<audio_hash>')
