@@ -39,4 +39,4 @@ def get_audio(audio_hash):
     response.content_type = 'audio/wav'
     return audio_data[audio_hash]
 
-run(host='0.0.0.0', port=8080, debug=True, reloader=True)
+run(host='0.0.0.0', port=8000, debug=True, reloader=True)
