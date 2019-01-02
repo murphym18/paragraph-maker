@@ -44,7 +44,22 @@
               <button id="combine_button" type="button" class="btn btn-default">Combine</button>
               <button id="read_all_button" type="button" class="btn btn-default dictate-button">Read All</button>
             </div>
-
+            <div class="btn-group" role="group">
+              <button id="voice_name" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Allison
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu">
+                <li><a class="voice-selection" id="allison" href="#">Allison</a></li>
+                <li><a class="voice-selection" id="salli" href="#">Salli</a></li>
+                <li><a class="voice-selection" id="kimberly" href="#">Kimberly</a></li>
+                <li><a class="voice-selection" id="kendra" href="#">Kendra</a></li>
+                <li><a class="voice-selection" id="joanna" href="#">Joanna</a></li>
+                <li><a class="voice-selection" id="emma" href="#">Emma</a></li>
+                <li><a class="voice-selection" id="amy" href="#">Amy</a></li>
+                <li><a class="voice-selection" id="nicole" href="#">Nicole</a></li>
+              </ul>
+            </div>
           </div>
         </div>
         <div class="col-md-4">
@@ -68,7 +83,8 @@
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
 
         <script src="js/vendor/bootstrap.min.js"></script>
-
+        <script src="js/vendor/underscore-min.js"></script>
+        <script src="js/vendor/backbone-min.js"></script>
         <script src="js/main.js"></script>
     </body>
 </html>

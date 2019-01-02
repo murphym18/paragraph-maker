@@ -3,7 +3,7 @@
 ![ Paragraph Maker](http://i.imgur.com/WpuFwhb.png  "Paragraph Maker")
 
 ## How to get setup
-You need to clone this repository, install all the dependencies, and put your bluemix.net login into `cred.py`
+You need to clone this repository, install all the dependencies, and put your bluemix.net login and/or your AWS access key into `cred.py`
 
 To get the python `bottle` library installed on Linux mint enter
 
@@ -29,6 +29,12 @@ After that you can install the Watson SDK for python by entering:
 
 ```bash
 	sudo pip3 install -U watson-developer-cloud
+```
+
+To install the AWS boto3 lib:
+
+```bash
+sudo apt install python3-boto3
 ```
 
 With all the dependcies installed, you only need to edit `cred.py`

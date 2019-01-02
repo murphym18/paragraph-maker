@@ -34,9 +34,10 @@ function makeTextAreaHtml(str) {
   `
 }
 
-function read(str) {
+function read(str, voiceName) {
   var payload = {
-    text: str
+    text: str,
+    voice: voiceName
   }
   var reqDetails = {
     method: 'POST',
@@ -53,6 +54,23 @@ function read(str) {
       `)
   });
 }
+
+var Voice = Backbone.Model.extend({
+  updateVoiceName: function(voiceName) {
+    this.set({name: voiceName});
+  }
+});
+
+window.voice = new Voice;
+
+function getVoiceName() {
+  return window.voice.get("name").toLowerCase()
+}
+
+window.voice.on('change', function(d) {
+  var h = `${window.voice.get("name")} <span class="caret"></span>`
+  $("#voice_name").html(h)
+})
 
 function getAllSentences() {
   return $(".a-sentence").map(function(e, textArea) {
@@ -91,6 +109,10 @@ function renderAllsentences(h) {
   $('button.read-button').on('click', onReadTextArea)
 }
 
+function updateVoiceSelection(voiceName, voiceKey) {
+
+}
+
 function onReadTextArea(e) {
   var rowElm = e.currentTarget.parentNode.parentNode.parentNode
   var txtarea = $(rowElm).find('.a-sentence')
@@ -99,18 +121,23 @@ function onReadTextArea(e) {
     return ta.value
   }).toArray().join("")
   // console.log(txt)
-  read(txt)
+  read(txt, getVoiceName())
 }
 
 function onReadButton() {
   var text = getAllSentences().join(" ")
-  read(text)
+  read(text, getVoiceName())
+}
+
+function onSelectVoice(e) {
+  window.voice.updateVoiceName($(e.currentTarget).text())
 }
 
 $(function() {
   $("#split_button").on('click', onSplitButton)
   $("#combine_button").on('click', onCombineButton)
   $("#read_all_button").on('click', onReadButton)
+  $(".voice-selection").on('click', onSelectVoice)
   renderAllsentences([""].map(makeTextAreaHtml).join(""))
 })
 

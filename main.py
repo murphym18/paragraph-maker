@@ -5,7 +5,17 @@ import sys
 import hashlib
 import speech
 
-voice = speech.ibm_voice
+default_voice = speech.ibm_voice
+voice_functions = {
+    'allison': speech.ibm_voice,
+    'salli': speech.salli_voice,
+    'kimberly': speech.kimberly_voice,
+    'kendra': speech.kendra_voice,
+    'joanna': speech.aws_voice,
+    'emma': speech.emma_voice,
+    'amy': speech.amy_voice,
+    'nicole': speech.nicole_voice
+}
 audio_data = dict()
 
 
@@ -24,16 +34,22 @@ def sentence_boundary_detector():
 
 @route('/api/read', method='POST')
 def read():
-    t = request.json['text']
+    text = request.json['text']
+    voice_name = request.json['voice']
+
     h = hashlib.new('sha256')
-    h.update(bytes(str(t), 'utf-8'))
+    h.update(bytes(str(text), 'utf-8'))
+    h.update(bytes(str(voice_name), 'utf-8'))
     file_name = h.hexdigest()
-    audio_data[file_name] = voice(t)
+    
+    voice = voice_functions[voice_name]
+    audio_data[file_name] = voice(text)
     return dict(audio_name=file_name)
 
 @route('/api/audio/<audio_hash>')
 def get_audio(audio_hash):
-    response.content_type = 'audio/wav'
-    return audio_data[audio_hash]
+    speech_data = audio_data[audio_hash]
+    response.content_type = speech_data.mime
+    return speech_data.audio 
 
 run(host='0.0.0.0', port=8000, debug=True, reloader=True)
