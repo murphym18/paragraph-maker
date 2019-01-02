@@ -62,6 +62,7 @@ var Voice = Backbone.Model.extend({
 });
 
 window.voice = new Voice;
+window.voice.updateVoiceName('allison')
 
 function getVoiceName() {
   return window.voice.get("name").toLowerCase()
