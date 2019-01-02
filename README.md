@@ -40,4 +40,4 @@ To run the server:
 ```bash
 	python3 main.py
 ```
-Now you point your browser at http://localhost:8080/static/
+Now you point your browser at http://localhost:8000/static/
