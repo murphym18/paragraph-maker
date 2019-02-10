@@ -7,14 +7,15 @@ import speech
 
 default_voice = speech.ibm_voice
 voice_functions = {
-    'allison': speech.ibm_voice,
+
     'salli': speech.salli_voice,
     'kimberly': speech.kimberly_voice,
     'kendra': speech.kendra_voice,
     'joanna': speech.aws_voice,
     'emma': speech.emma_voice,
     'amy': speech.amy_voice,
-    'nicole': speech.nicole_voice
+    'nicole': speech.nicole_voice,
+    'allison': speech.ibm_voice
 }
 audio_data = dict()
 
